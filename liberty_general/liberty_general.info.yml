@@ -1,0 +1,8 @@
+name: General Liberty functions and stuff
+type: module
+description: 'Provides stuff.'
+package: Liberty
+# core: 8.x
+dependencies:
+  - drupal:toolbar
+core: '8.x'

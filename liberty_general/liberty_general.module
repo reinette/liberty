@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * 
+ */
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+/*
+function liberty_general_node_presave(NodeInterface $node) {
+  if ($node->bundle() == 'tour_operator') {
+    $value = $node->get('field_price_1')->value;
+    $value2 = $node->get('field_price_2')->value;
+
+    $node->set('field_price_total', $value + $value2);
+
+  }
+}
+*/
+
+/**
+ * Implements hook_entity_type_build().
+ * (This was formerly hook_entity_info()).
+ */
+function liberty_general_entity_type_build(array &$entity_types) {
+	// Add constraint to node entities
+	$entity_types['node']->addConstraint('DateChecker', []);
+}
+/**
+ * Implements hook_entity_base_field_info_alter().
+ * 
+ */
+function liberty_general_entity_bundle_field_info_alter(&$fields, \Drupal\Core\Entity\EntityTypeInterface $entity_type, $bundle) {
+
+	if ($entity_type->id() == 'node') {
+		dpm($fields);
+		if (!empty($fields['field_color_he'])) {
+			// A list of out-of-the-box constraints is available here:
+			// https://api.drupal.org/api/drupal/vendor%21symfony%21validator%21Constraint.php/class/hierarchy/Constraint/8.5.x
+			// Add pre-existing and custom constraints.
+			$fields['field_color_he']->addConstraint('ColorHex', []);
+		}
+
+	}
+}
